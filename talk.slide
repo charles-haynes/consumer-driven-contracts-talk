@@ -1,0 +1,80 @@
+Consumer Driven Contracts
+10 Dec 2015
+
+Charles Haynes
+charles.haynes@orchestrated.com
+
+* What are consumer driven contracts?
+Code
+That specifies consumer expectations from a service provider (API)
+In a way that can be externally encapsulated (a "pact")
+Used by a provider to validate its implementation
+
+* Why would you want it?
+Let's look at typical microservice testing without contracts
+
+* Client mocks
+Nice and fast, but no assurance that this is what the provider actually implements (assymetrical)
+
+* Integration tests
+Slow
+Fragile
+Difficult to set up
+Combinatorial complexity - Don't scale when you have lots of interdependent services (micro services)
+
+* Advantages of consumer driven contract tests
+Fast
+Symmetrical
+Scale linearly with the number of services
+
+* How do you implement it?
+A client library to express consumer expectations (code)
+A file format that captures those expectations ("pact")
+A server that can take a pact, replay it against a service, and verify the results
+As a side effect, you get a mock service for your clients.
+
+* Practical implementation considerations
+Originally Ruby, also JVM, Javascript client exists, server is under development
+Came from REA, DiUS and ThoughtWorks like it, PageUp and Seek use it.
+
+* TDD for services
+"Write tests first"
+How do you do that for a service API?
+Consumer first
+Write a description of how the consumer will use the service and what the consumer expects.
+Use this to mock the service for your consumer.
+Use the _same_ description to test that the service is generating what you expect
+Implement the service
+Feel confident it will work with the consumer
+
+* Fearless refactoring
+You're free to change API trust that your tests will expose any issues
+Use the same specification for the client and the server
+In process, like a unit test, so it's fast and has low overhead.
+
+* Independently releasable
+Services can be released independently of each other
+Clients can be released independently of their services
+Services can be released independently of their clients
+
+* Automatable
+Works with CI/CD
+Your API tests are automated and fast
+
+* "The Matrix"
+`Client`Prod`x`Service`Prod` "Are the deployed clients and services compatible?"
+`Client`Prod`x`Service`Head` "Is the new service compatible with deployed clients?"
+`Client`Head`x`Service`Prod` "Is the new client compatible with the prod service?"
+`Client`Head`x`Service`Head` "Is the new client compatible with the new services?"
+
+Testing all four of these on each checkin mean that you can be sure that you can deploy whenever the build is green.
+
+* Future
+Pact broker as a repository for pacts
+Distribute new pacts to services
+Can provide a graph of consumers and producers across all your services (if you use pact broker)
+
+* The heat death of integration tests
+With good business oriented monitoring
+Automated tests
+Fast recovery
