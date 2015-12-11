@@ -78,3 +78,8 @@ Can provide a graph of consumers and producers across all your services (if you 
 With good business oriented monitoring
 Automated tests
 Fast recovery
+
+* Links
+[[http://www.infoq.com/presentations/pact][Pacts To The Rescue]] talk by Beth Skurrie
+[[http://dius.com.au/2014/05/19/simplifying-micro-service-testing-with-pacts/][Simplifying Micro-Service testing with Pacts]] by DiUS
+[[https://github.com/DiUS/pact-consumer-js-dsl]]
